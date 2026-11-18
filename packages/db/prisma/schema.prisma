@@ -1,0 +1,226 @@
+// Baseline schema (M0). Domain tables (profiles, orders, dispatch, tracking,
+// payments) are added by later milestones through versioned migrations.
+// PostGIS is enabled by the migration that first adds geography columns (M2/M5),
+// not here — no baseline table uses geometry yet.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  customer
+  merchant
+  courier
+  admin
+}
+
+enum UserStatus {
+  active
+  pending
+  suspended
+}
+
+enum Locale {
+  ar
+  fr
+}
+
+model User {
+  id            String         @id @default(uuid()) @db.Uuid
+  phone         String         @unique
+  email         String?        @unique
+  passwordHash  String
+  role          Role
+  status        UserStatus     @default(active)
+  locale        Locale         @default(ar)
+  totpSecret        String?
+  totpPendingSecret String?
+  totpEnabled       Boolean    @default(false)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  refreshTokens RefreshToken[]
+  auditLogs     AuditLog[]
+  customerProfile CustomerProfile?
+  merchantProfile MerchantProfile?
+  courierProfile  CourierProfile?
+  addresses       Address[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid
+  tokenHash String    @unique
+  familyId  String    @db.Uuid
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([familyId])
+  @@map("refresh_tokens")
+}
+
+model Wilaya {
+  code           Int            @id
+  nameAr         String
+  nameFr         String
+  municipalities Municipality[]
+  merchantProfiles MerchantProfile[]
+  courierProfiles  CourierProfile[]
+  addresses        Address[]
+
+  @@map("wilayas")
+}
+
+model Municipality {
+  id         String  @id @default(uuid()) @db.Uuid
+  wilayaCode Int
+  nameAr     String
+  nameFr     String
+  postalCode String?
+  wilaya     Wilaya  @relation(fields: [wilayaCode], references: [code])
+  merchantProfiles MerchantProfile[]
+  courierProfiles  CourierProfile[]
+  addresses        Address[]
+
+  @@unique([wilayaCode, nameFr])
+  @@map("municipalities")
+}
+
+model AdminSetting {
+  key       String   @id
+  value     Json
+  updatedBy String?  @db.Uuid
+  updatedAt DateTime @updatedAt
+
+  @@map("admin_settings")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  actorId   String?  @db.Uuid
+  action    String
+  entity    String
+  entityId  String?
+  ip        String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  actor     User?    @relation(fields: [actorId], references: [id])
+
+  @@index([entity, entityId])
+  @@index([actorId, createdAt])
+  @@map("audit_logs")
+}
+
+// --- M2: profiles, vehicles, addresses -------------------------------------
+
+enum VehicleType {
+  motorcycle
+  car
+  truck
+}
+
+enum CourierAvailability {
+  offline
+  online
+  busy
+}
+
+model CustomerProfile {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @unique @db.Uuid
+  fullName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("customer_profiles")
+}
+
+model MerchantProfile {
+  id             String        @id @default(uuid()) @db.Uuid
+  userId         String        @unique @db.Uuid
+  businessName   String
+  description    String?
+  wilayaCode     Int
+  municipalityId String?       @db.Uuid
+  addressLine    String
+  latitude       Float?
+  longitude      Float?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wilaya         Wilaya        @relation(fields: [wilayaCode], references: [code])
+  municipality   Municipality? @relation(fields: [municipalityId], references: [id])
+
+  @@index([wilayaCode])
+  @@map("merchant_profiles")
+}
+
+model CourierProfile {
+  id                String              @id @default(uuid()) @db.Uuid
+  userId            String              @unique @db.Uuid
+  fullName          String
+  wilayaCode        Int
+  municipalityId    String?             @db.Uuid
+  availability      CourierAvailability @default(offline)
+  latitude          Float?
+  longitude         Float?
+  locationUpdatedAt DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wilaya            Wilaya              @relation(fields: [wilayaCode], references: [code])
+  municipality      Municipality?       @relation(fields: [municipalityId], references: [id])
+  vehicles          Vehicle[]
+
+  @@index([wilayaCode])
+  @@index([availability])
+  @@map("courier_profiles")
+}
+
+model Vehicle {
+  id               String         @id @default(uuid()) @db.Uuid
+  courierProfileId String         @db.Uuid
+  type             VehicleType
+  plateNumber      String         @unique
+  brand            String?
+  model            String?
+  color            String?
+  isDefault        Boolean        @default(false)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  courierProfile   CourierProfile @relation(fields: [courierProfileId], references: [id], onDelete: Cascade)
+
+  @@index([courierProfileId])
+  @@map("vehicles")
+}
+
+model Address {
+  id             String        @id @default(uuid()) @db.Uuid
+  userId         String        @db.Uuid
+  label          String
+  wilayaCode     Int
+  municipalityId String?       @db.Uuid
+  addressLine    String
+  latitude       Float?
+  longitude      Float?
+  isDefault      Boolean       @default(false)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wilaya         Wilaya        @relation(fields: [wilayaCode], references: [code])
+  municipality   Municipality? @relation(fields: [municipalityId], references: [id])
+
+  @@index([userId])
+  @@map("addresses")
+}

@@ -1,0 +1,30 @@
+{
+  "name": "delivery-platform",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Delivery platform for the Algerian market — customers, merchants, couriers, admins.",
+  "packageManager": "pnpm@12.18.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "predev": "pnpm --filter @delivery/shared --filter @delivery/db build",
+    "dev": "pnpm --parallel --filter @delivery/api --filter @delivery/web --filter @delivery/admin-web dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "pnpm -r typecheck",
+    "docker:up": "docker compose --env-file infra/docker/.env -f infra/docker/docker-compose.yml up -d",
+    "docker:down": "docker compose --env-file infra/docker/.env -f infra/docker/docker-compose.yml down",
+    "db:migrate": "pnpm --filter @delivery/db migrate:dev",
+    "db:seed": "pnpm --filter @delivery/db seed",
+    "db:studio": "pnpm --filter @delivery/db studio"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.0",
+    "prettier": "^3.6.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.46.0"
+  }
+}

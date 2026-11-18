@@ -1,0 +1,28 @@
+{
+  "name": "@delivery/db",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Prisma schema, migrations, seeds, and client factory.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "generate": "prisma generate",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "seed": "prisma db seed",
+    "studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "dotenv": "^18.0.10"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "prisma": "^6.19.3",
+    "tsx": "^4.23.15",
+    "vitest": "^5.1.0"
+  }
+}

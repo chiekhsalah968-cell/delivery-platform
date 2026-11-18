@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "title": "Administration — Plateforme de livraison",
+    "description": "Tableau de bord privé pour administrer la plateforme de livraison en Algérie."
+  },
+  "brand": { "short": "L", "name": "Plateforme de livraison" },
+  "app": {
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs",
+    "settings": "Réglages",
+    "audit": "Journal d'activité",
+    "security": "Sécurité",
+    "logout": "Déconnexion",
+    "adminBadge": "Mode admin"
+  },
+  "auth": {
+    "login": {
+      "badge": "Accès réservé à l'administration",
+      "title": "Connexion administrateur",
+      "subtitle": "Saisissez le téléphone ou l'e-mail de l'administrateur et le mot de passe.",
+      "submit": "Se connecter",
+      "submitting": "Connexion…",
+      "privateNotice": "Console privée réservée aux administrateurs. Aucun compte admin ne peut être créé depuis l'application publique."
+    },
+    "mfa": {
+      "subtitle": "Saisissez le code à 6 chiffres de votre application d'authentification.",
+      "codeLabel": "Code d'authentification",
+      "submit": "Vérifier",
+      "submitting": "Vérification…",
+      "back": "Retour",
+      "invalidCode": "Code d'authentification incorrect."
+    },
+    "fields": {
+      "identifier": "Téléphone ou e-mail",
+      "identifierPlaceholder": "0550000001 ou admin@example.dz",
+      "password": "Mot de passe"
+    },
+    "errors": {
+      "invalidCredentials": "Identifiants incorrects.",
+      "forbidden": "Ce compte n'est pas administrateur ou il est suspendu.",
+      "rateLimited": "Trop de tentatives. Patientez puis réessayez.",
+      "generic": "La requête a échoué. Réessayez."
+    },
+    "validation": {
+      "identifier": "Saisissez un téléphone ou e-mail valide.",
+      "password": "Le mot de passe est requis.",
+      "code": "Saisissez le code d'authentification à 6 chiffres.",
+      "mfaToken": "Session de vérification expirée. Reconnectez-vous."
+    }
+  },
+  "roles": {
+    "customer": { "title": "Clients" },
+    "merchant": { "title": "Commerçants" },
+    "courier": { "title": "Coursiers" },
+    "admin": { "title": "Administration" }
+  },
+  "dashboard": {
+    "status_active": "Actif",
+    "status_pending": "En attente d'approbation",
+    "status_suspended": "Suspendu"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "saved": "Enregistré",
+    "cancel": "Annuler",
+    "loading": "Chargement…",
+    "error": "Une erreur est survenue. Réessayez."
+  },
+  "admin": {
+    "pending": "Demandes en attente d'approbation",
+    "pendingSubtitle": "Approuvez ou rejetez les nouveaux commerçants et coursiers.",
+    "noPending": "Aucune demande en attente.",
+    "approve": "Approuver",
+    "reject": "Rejeter",
+    "reactivate": "Réactiver",
+    "suspend": "Suspendre",
+    "confirmSuspend": "Confirmer la suspension",
+    "reason": "Motif (facultatif)",
+    "approved": "Compte approuvé.",
+    "rejected": "Compte rejeté.",
+    "reactivated": "Compte réactivé.",
+    "suspended": "Compte suspendu.",
+    "users": "Utilisateurs",
+    "usersSubtitle": "Gérez les clients, commerçants, coursiers et administrateurs.",
+    "phone": "Téléphone",
+    "role": "Rôle",
+    "status": "État",
+    "business": "Activité",
+    "actions": "Actions",
+    "vehiclesCount": "Véhicules",
+    "noProfile": "Profil non complété.",
+    "allRoles": "Tous les rôles",
+    "allStatuses": "Tous les états"
+  },
+  "stats": {
+    "totalUsers": "Utilisateurs totaux",
+    "pendingApplications": "Demandes en attente",
+    "newUsers7d": "Nouveaux utilisateurs (7 j)",
+    "auditEvents": "Événements du journal",
+    "byRole": "Par rôle",
+    "byStatus": "Par état",
+    "honestyNote": "Statistiques réelles issues de la base de données. La gestion des commandes et des revenus arrive dans une phase ultérieure."
+  },
+  "settings": {
+    "pricingTitle": "Tarification et commission",
+    "pricingSubtitle": "Réglages des frais de livraison et de la commission (en dinar algérien).",
+    "commissionRate": "Taux de commission (%)",
+    "commissionHint": "Exemple : 10 signifie 10 %.",
+    "baseDeliveryFee": "Frais de livraison de base",
+    "perKmFee": "Frais par kilomètre",
+    "minimumFee": "Frais minimum",
+    "dzdHint": "En dinar algérien (DZD)",
+    "currencyNote": "Devise : dinar algérien (DZD). Ces valeurs s'appliqueront aux commandes à leur lancement.",
+    "saved": "Réglages enregistrés.",
+    "otherTitle": "Autres réglages",
+    "otherSubtitle": "Clés de configuration de la plateforme enregistrées.",
+    "noOther": "Aucun autre réglage."
+  },
+  "audit": {
+    "title": "Journal d'activité de sécurité",
+    "subtitle": "Suivez les actions sensibles sur la plateforme.",
+    "actionFilter": "Filtrer par action",
+    "entityFilter": "Filtrer par entité",
+    "limit": "Nombre",
+    "refresh": "Actualiser",
+    "empty": "Aucun événement.",
+    "time": "Heure",
+    "actor": "Acteur",
+    "action": "Action",
+    "entity": "Entité",
+    "details": "Détails",
+    "system": "Système"
+  },
+  "security": {
+    "title": "Authentification à deux facteurs (2FA)",
+    "subtitle": "Protégez le compte administrateur avec un code d'application d'authentification.",
+    "statusEnabled": "Activée",
+    "statusDisabled": "Désactivée",
+    "setupIntro": "Activez la 2FA pour ajouter une couche de sécurité à la connexion.",
+    "setupButton": "Commencer la configuration",
+    "scanIntro": "Scannez le QR code avec votre application d'authentification (Google Authenticator, Authy…), puis saisissez le code affiché.",
+    "manualKey": "Ou saisissez la clé manuellement :",
+    "codeLabel": "Code d'authentification",
+    "enableButton": "Vérifier et activer",
+    "enabledRelogin": "2FA activée. Pour des raisons de sécurité, reconnectez-vous avec votre code d'authentification.",
+    "reloginButton": "Se reconnecter",
+    "enabledNote": "La 2FA est activée. Pour la désactiver, saisissez un code valide de votre application.",
+    "disableButton": "Désactiver la 2FA",
+    "disabled": "2FA désactivée.",
+    "invalidCode": "Code d'authentification incorrect."
+  }
+}

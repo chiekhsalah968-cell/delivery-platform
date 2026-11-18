@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "title": "Plateforme de livraison — Algérie",
+    "description": "Plateforme de livraison professionnelle reliant clients, commerçants et coursiers en Algérie."
+  },
+  "brand": { "short": "L", "name": "Plateforme de livraison" },
+  "hero": {
+    "badge": "Phase 2 : profils et tableaux de bord",
+    "title": "La livraison professionnelle dans les 58 wilayas d'Algérie",
+    "subtitle": "Une plateforme qui relie clients, commerçants et coursiers, avec distribution automatique des commandes aux trois coursiers les plus proches et suivi en direct jusqu'à la porte du client."
+  },
+  "roles": {
+    "customer": { "title": "Clients", "description": "Commandez une livraison et suivez votre coursier en direct sur la carte." },
+    "merchant": { "title": "Commerçants", "description": "Créez et gérez vos commandes de livraison depuis un seul tableau de bord." },
+    "courier": { "title": "Coursiers", "description": "Recevez les offres proches de vous et acceptez-les en un geste." }
+  },
+  "facts": {
+    "wilayas": "58 wilayas",
+    "cod": "Paiement à la livraison (DZD)",
+    "languages": "العربية / Français"
+  },
+  "honesty": "L'authentification, les profils et les tableaux de bord sont disponibles ; commandes, distribution et suivi sont en développement.",
+  "footer": "Plateforme de livraison — Algérie · Prix en dinar algérien (DZD)",
+  "nav": {
+    "login": "Connexion",
+    "register": "Créer un compte",
+    "dashboard": "Tableau de bord",
+    "logout": "Déconnexion"
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Saisissez votre téléphone ou e-mail et votre mot de passe.",
+      "submit": "Se connecter",
+      "submitting": "Connexion…",
+      "noAccount": "Pas encore de compte ?",
+      "registerLink": "Créer un compte"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "subtitle": "Rejoignez la plateforme comme client, commerçant ou coursier.",
+      "submit": "Créer le compte",
+      "submitting": "Création…",
+      "haveAccount": "Vous avez déjà un compte ?",
+      "loginLink": "Se connecter"
+    },
+    "fields": {
+      "identifier": "Téléphone ou e-mail",
+      "identifierPlaceholder": "0550123456 ou nom@example.dz",
+      "password": "Mot de passe",
+      "passwordHint": "Au moins 8 caractères, avec une lettre et un chiffre.",
+      "role": "Type de compte",
+      "phone": "Numéro de téléphone",
+      "email": "E-mail (facultatif)"
+    },
+    "errors": {
+      "invalidCredentials": "Identifiants incorrects.",
+      "suspended": "Ce compte est suspendu. Contactez le support.",
+      "conflict": "Ce téléphone ou e-mail est déjà enregistré.",
+      "rateLimited": "Trop de tentatives. Patientez puis réessayez.",
+      "generic": "La requête a échoué. Réessayez."
+    },
+    "validation": {
+      "identifier": "Saisissez un téléphone ou e-mail valide.",
+      "password": "Le mot de passe doit contenir 8 caractères, une lettre et un chiffre.",
+      "phone": "Saisissez un numéro algérien valide.",
+      "email": "Saisissez un e-mail valide.",
+      "role": "Choisissez un type de compte valide."
+    }
+  },
+  "dashboard": {
+    "brandShort": "L",
+    "title": "Tableau de bord",
+    "welcome": "Bienvenue sur la plateforme de livraison",
+    "phone": "Numéro de téléphone",
+    "status": "État du compte",
+    "status_active": "Actif",
+    "status_pending": "En attente d'approbation",
+    "status_suspended": "Suspendu",
+    "pendingNote": "Votre compte attend l'approbation de l'administration avant l'activation complète.",
+    "roadmapNote": "La gestion des commandes, la distribution et le suivi en direct arrivent aux prochaines phases.",
+    "logout": "Déconnexion",
+    "profileLink": "Compléter le profil",
+    "profileIncomplete": "Complétez votre profil pour activer pleinement votre compte.",
+    "courierAvailability": "Disponibilité",
+    "merchantBusiness": "Activité commerciale",
+    "customerAddresses": "Mes adresses"
+  },
+  "app": {
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "logout": "Déconnexion"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "saved": "Enregistré",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "loading": "Chargement…",
+    "error": "Une erreur est survenue. Réessayez.",
+    "optional": "facultatif",
+    "default": "Par défaut",
+    "makeDefault": "Définir par défaut",
+    "empty": "Aucun élément pour le moment.",
+    "confirmDelete": "Supprimer cet élément ?"
+  },
+  "profile": {
+    "title": "Profil",
+    "subtitle": "Complétez vos informations pour activer votre compte et utiliser la plateforme.",
+    "customerSection": "Informations client",
+    "merchantSection": "Informations commerciales",
+    "courierSection": "Informations coursier",
+    "fullName": "Nom complet",
+    "businessName": "Nom de l'activité",
+    "description": "Description de l'activité",
+    "wilaya": "Wilaya",
+    "municipality": "Commune",
+    "addressLine": "Adresse",
+    "selectWilaya": "Choisir la wilaya",
+    "selectMunicipality": "Choisir la commune",
+    "coordinates": "Coordonnées (facultatif)",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "savedNote": "Votre profil a été enregistré."
+  },
+  "vehicles": {
+    "title": "Véhicules",
+    "subtitle": "Ajoutez les véhicules utilisés pour la livraison.",
+    "add": "Ajouter un véhicule",
+    "type": "Type de véhicule",
+    "plateNumber": "Numéro d'immatriculation",
+    "brand": "Marque",
+    "model": "Modèle",
+    "color": "Couleur",
+    "types": { "motorcycle": "Moto", "car": "Voiture", "truck": "Camion" },
+    "empty": "Aucun véhicule ajouté.",
+    "added": "Véhicule ajouté.",
+    "deleted": "Véhicule supprimé."
+  },
+  "addresses": {
+    "title": "Adresses",
+    "subtitle": "Enregistrez vos adresses de livraison.",
+    "add": "Ajouter une adresse",
+    "label": "Libellé de l'adresse",
+    "labelPlaceholder": "Domicile, travail…",
+    "empty": "Aucune adresse ajoutée.",
+    "added": "Adresse ajoutée.",
+    "deleted": "Adresse supprimée."
+  },
+  "availability": {
+    "title": "Disponibilité",
+    "offline": "Hors ligne",
+    "online": "Disponible",
+    "busy": "Occupé",
+    "hint": "Lorsque vous êtes disponible, vous recevez les offres de livraison proches.",
+    "updated": "Disponibilité mise à jour."
+  }
+}
