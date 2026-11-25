@@ -1,5 +1,6 @@
 export * from './constants';
 export * from './orders/status';
+export * from './orders/order';
 export * from './phone';
 export * from './money';
 export * from './env';

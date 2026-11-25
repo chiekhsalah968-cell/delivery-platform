@@ -8,6 +8,7 @@ import { Link, usePathname, useRouter } from '@/i18n/navigation';
 
 const NAV = [
   { href: '/dashboard', key: 'dashboard' },
+  { href: '/orders', key: 'orders' },
   { href: '/profile', key: 'profile' },
 ] as const;
 
@@ -56,7 +57,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <nav className="flex flex-wrap gap-2 border-b border-slate-800 pb-4">
         {NAV.map((item) => {
-          const active = pathname === item.href;
+          const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
             <Link
               key={item.href}

@@ -18,6 +18,7 @@ import { GeoModule } from './modules/geo/geo.module';
 import { ProfilesModule } from './modules/profiles/profiles.module';
 import { VehiclesModule } from './modules/vehicles/vehicles.module';
 import { AddressesModule } from './modules/addresses/addresses.module';
+import { OrdersModule } from './modules/orders/orders.module';
 import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
@@ -48,6 +49,7 @@ import { AdminModule } from './modules/admin/admin.module';
     ProfilesModule,
     VehiclesModule,
     AddressesModule,
+    OrdersModule,
     AdminModule,
   ],
   providers: [

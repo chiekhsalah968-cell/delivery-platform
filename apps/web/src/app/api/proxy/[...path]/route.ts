@@ -8,7 +8,7 @@ import { authedApi } from '@/lib/authed-api';
  * prefixes below are proxied — admin endpoints are intentionally excluded and
  * live solely in the private admin app.
  */
-const ALLOWED_PREFIXES = new Set(['geo', 'profiles', 'vehicles', 'addresses']);
+const ALLOWED_PREFIXES = new Set(['geo', 'profiles', 'vehicles', 'addresses', 'orders']);
 
 async function handle(request: NextRequest, segments: string[]): Promise<NextResponse> {
   if (

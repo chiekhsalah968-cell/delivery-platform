@@ -49,6 +49,9 @@ model User {
   merchantProfile MerchantProfile?
   courierProfile  CourierProfile?
   addresses       Address[]
+  customerOrders    Order[]            @relation("CustomerOrders")
+  cancelledOrders   Order[]            @relation("CancelledOrders")
+  orderStatusEvents OrderStatusEvent[] @relation("OrderStatusActor")
 
   @@map("users")
 }
@@ -76,6 +79,8 @@ model Wilaya {
   merchantProfiles MerchantProfile[]
   courierProfiles  CourierProfile[]
   addresses        Address[]
+  pickupOrders     Order[]      @relation("OrderPickupWilaya")
+  dropoffOrders    Order[]      @relation("OrderDropoffWilaya")
 
   @@map("wilayas")
 }
@@ -90,6 +95,8 @@ model Municipality {
   merchantProfiles MerchantProfile[]
   courierProfiles  CourierProfile[]
   addresses        Address[]
+  pickupOrders     Order[]      @relation("OrderPickupMunicipality")
+  dropoffOrders    Order[]      @relation("OrderDropoffMunicipality")
 
   @@unique([wilayaCode, nameFr])
   @@map("municipalities")
@@ -161,6 +168,7 @@ model MerchantProfile {
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   wilaya         Wilaya        @relation(fields: [wilayaCode], references: [code])
   municipality   Municipality? @relation(fields: [municipalityId], references: [id])
+  orders         Order[]
 
   @@index([wilayaCode])
   @@map("merchant_profiles")
@@ -223,4 +231,106 @@ model Address {
 
   @@index([userId])
   @@map("addresses")
+}
+
+// --- M3: orders & merchant order management --------------------------------
+
+enum OrderStatus {
+  pending_dispatch
+  offered
+  accepted
+  en_route_pickup
+  picked_up
+  en_route_dropoff
+  delivered
+  completed
+  unassigned
+  cancelled
+  failed_delivery
+}
+
+enum PaymentMethod {
+  cod
+}
+
+model Order {
+  id                String        @id @default(uuid()) @db.Uuid
+  orderNumber       String        @unique
+  merchantProfileId String        @db.Uuid
+  customerUserId    String?       @db.Uuid
+  status            OrderStatus   @default(pending_dispatch)
+  paymentMethod     PaymentMethod @default(cod)
+
+  // Pickup snapshot (store location captured at creation time)
+  pickupBusinessName   String
+  pickupWilayaCode     Int
+  pickupMunicipalityId String?       @db.Uuid
+  pickupAddressLine    String
+  pickupLatitude       Float?
+  pickupLongitude      Float?
+
+  // Recipient & dropoff
+  customerName          String
+  customerPhone         String
+  dropoffWilayaCode     Int
+  dropoffMunicipalityId String?   @db.Uuid
+  dropoffAddressLine    String
+  dropoffLatitude       Float?
+  dropoffLongitude      Float?
+
+  notes       String?
+  // Amounts are whole Algerian dinars (DZD has no practical subunit).
+  subtotal    Int
+  deliveryFee Int      @default(0)
+  total       Int
+
+  cancelReason  String?
+  cancelledAt   DateTime?
+  cancelledById String?   @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  merchantProfile    MerchantProfile    @relation(fields: [merchantProfileId], references: [id])
+  customer           User?              @relation("CustomerOrders", fields: [customerUserId], references: [id])
+  cancelledBy        User?              @relation("CancelledOrders", fields: [cancelledById], references: [id])
+  pickupWilaya       Wilaya             @relation("OrderPickupWilaya", fields: [pickupWilayaCode], references: [code])
+  pickupMunicipality Municipality?      @relation("OrderPickupMunicipality", fields: [pickupMunicipalityId], references: [id], onDelete: SetNull)
+  dropoffWilaya      Wilaya             @relation("OrderDropoffWilaya", fields: [dropoffWilayaCode], references: [code])
+  dropoffMunicipality Municipality?     @relation("OrderDropoffMunicipality", fields: [dropoffMunicipalityId], references: [id], onDelete: SetNull)
+  items              OrderItem[]
+  statusEvents       OrderStatusEvent[]
+
+  @@index([merchantProfileId, createdAt])
+  @@index([customerUserId, createdAt])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id @default(uuid()) @db.Uuid
+  orderId   String  @db.Uuid
+  name      String
+  quantity  Int
+  unitPrice Int?
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model OrderStatusEvent {
+  id         String      @id @default(uuid()) @db.Uuid
+  orderId    String      @db.Uuid
+  fromStatus OrderStatus?
+  toStatus   OrderStatus
+  actorId    String?     @db.Uuid
+  note       String?
+  createdAt  DateTime    @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  actor User? @relation("OrderStatusActor", fields: [actorId], references: [id])
+
+  @@index([orderId, createdAt])
+  @@map("order_status_events")
 }
